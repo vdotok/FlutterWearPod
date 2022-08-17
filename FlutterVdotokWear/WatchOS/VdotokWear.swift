@@ -26,13 +26,13 @@ public class VdoTokWear: WKInterfaceController, WCSessionDelegate {
             
             print("this is from mobile ", message["counter"] as! String)
             if(message["type"] as! String == "hr"){
-                VdoTokWear.getHeartRate()
+                getHeartRate()
             }
             else if(message["type"] as! String == "bo"){
-//                getBloodOxygen()
+                getBloodOxygen()
             }
             else if(message["type"] as! String == "sc"){
-//                getStepCounts()
+                getStepCounts()
             }else{
                 
             }
@@ -65,6 +65,7 @@ public class VdoTokWear: WKInterfaceController, WCSessionDelegate {
          let session = WCSession.default;
          session.delegate = self;
          session.activate();
+            print("awake...")
         }
 
 //        label.setText("Taimoor Watch")
@@ -75,12 +76,14 @@ public class VdoTokWear: WKInterfaceController, WCSessionDelegate {
     public override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
+        print("willActivate...")
 //        start()
     }
 
     public override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
+        print("didDeactivate...")
     }
 
 
@@ -88,7 +91,7 @@ public class VdoTokWear: WKInterfaceController, WCSessionDelegate {
 
 //    for Sensors data
 
-  public static  func start() {
+  public   func start() {
         getBloodOxygen()
         getHeartRate()
         getStepCounts()
@@ -98,7 +101,7 @@ public class VdoTokWear: WKInterfaceController, WCSessionDelegate {
 //        HeartRateModel.init()
        
     }
-    public static  func  getBloodOxygen(){
+    public   func  getBloodOxygen(){
         let bloodOxygenModel = BloodOxygenModel()
         bloodOxygenModel.autorizeHealthKit(){ value, error in
             
@@ -106,7 +109,7 @@ public class VdoTokWear: WKInterfaceController, WCSessionDelegate {
             
         }
     }
-    public static  func  getHeartRate(){
+    public   func  getHeartRate(){
           let heartRateModel = HeartRateModel()
         heartRateModel.autorizeHealthKit(){ value, error in
               
@@ -114,7 +117,7 @@ public class VdoTokWear: WKInterfaceController, WCSessionDelegate {
               
           }
       }
-    public static  func getStepCounts(){
+    public   func getStepCounts(){
         let stepCountModel = StepsCountModel()
         stepCountModel.autorizeHealthKit(completion: {value, error in
             
