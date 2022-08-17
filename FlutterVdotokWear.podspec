@@ -23,6 +23,6 @@ Pod::Spec.new do |spec|
   spec.source       = { :git => "https://github.com/vdotok/FlutterWearPod.git", :tag => "#{spec.version}" }
   spec.ios.deployment_target = '10.0'
   spec.ios.source_files = "FlutterWearPod/Shared/**/*.swift"
-  spec.watchos.deployment_target = '6.0'x
+  spec.watchos.deployment_target = '6.0'
   spec.watchos.source_files = "FlutterVdotokWear/WatchOS/**/*.swift"
 end
