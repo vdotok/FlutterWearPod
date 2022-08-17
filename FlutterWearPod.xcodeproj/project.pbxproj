@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		0F59516428ACD373000DA418 /* FlutterWearPod.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59516328ACD373000DA418 /* FlutterWearPod.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0F59517228ACD4C8000DA418 /* FlutterVdotokWear.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59517128ACD4C8000DA418 /* FlutterVdotokWear.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0F59517C28ACD646000DA418 /* FlutterVdotokWear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F59517B28ACD646000DA418 /* FlutterVdotokWear.swift */; };
+		0F59517C28ACD646000DA418 /* VdotokWear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F59517B28ACD646000DA418 /* VdotokWear.swift */; };
 		0F59517F28ACD6C7000DA418 /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F59517E28ACD6C7000DA418 /* Shared.swift */; };
 		0F59518128ACD6F6000DA418 /* BloodOxygenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F59518028ACD6F6000DA418 /* BloodOxygenModel.swift */; };
 		0F59518328ACD6FE000DA418 /* HeartRateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F59518228ACD6FE000DA418 /* HeartRateModel.swift */; };
@@ -21,7 +21,7 @@
 		0F59516328ACD373000DA418 /* FlutterWearPod.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlutterWearPod.h; sourceTree = "<group>"; };
 		0F59516F28ACD4C8000DA418 /* FlutterVdotokWear.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FlutterVdotokWear.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F59517128ACD4C8000DA418 /* FlutterVdotokWear.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlutterVdotokWear.h; sourceTree = "<group>"; };
-		0F59517B28ACD646000DA418 /* FlutterVdotokWear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlutterVdotokWear.swift; sourceTree = "<group>"; };
+		0F59517B28ACD646000DA418 /* VdotokWear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VdotokWear.swift; sourceTree = "<group>"; };
 		0F59517E28ACD6C7000DA418 /* Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
 		0F59518028ACD6F6000DA418 /* BloodOxygenModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BloodOxygenModel.swift; sourceTree = "<group>"; };
 		0F59518228ACD6FE000DA418 /* HeartRateModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateModel.swift; sourceTree = "<group>"; };
@@ -88,7 +88,7 @@
 				0F59518028ACD6F6000DA418 /* BloodOxygenModel.swift */,
 				0F59518228ACD6FE000DA418 /* HeartRateModel.swift */,
 				0F59518428ACD707000DA418 /* StepsCountModel.swift */,
-				0F59517B28ACD646000DA418 /* FlutterVdotokWear.swift */,
+				0F59517B28ACD646000DA418 /* VdotokWear.swift */,
 			);
 			path = WatchOS;
 			sourceTree = "<group>";
@@ -229,7 +229,7 @@
 			files = (
 				0F59518128ACD6F6000DA418 /* BloodOxygenModel.swift in Sources */,
 				0F59518528ACD707000DA418 /* StepsCountModel.swift in Sources */,
-				0F59517C28ACD646000DA418 /* FlutterVdotokWear.swift in Sources */,
+				0F59517C28ACD646000DA418 /* VdotokWear.swift in Sources */,
 				0F59518328ACD6FE000DA418 /* HeartRateModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
