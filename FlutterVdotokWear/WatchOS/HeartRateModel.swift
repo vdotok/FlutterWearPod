@@ -105,7 +105,7 @@ class HeartRateModel : NSObject{
               return
           }
               
-              self.process(samples, type: .heartRate, completion: { [self]value, error in
+              self.process(samples, type: .heartRate, completion: { value, error in
                   
                   if((value) != nil){
                       completion(value, nil)
