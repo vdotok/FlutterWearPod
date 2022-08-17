@@ -9,7 +9,7 @@ import WatchKit
 import Foundation
 import WatchConnectivity
 import HealthKit
-class FlutterVdoTokWear: WKInterfaceController, WCSessionDelegate {
+public class VdoTokWear: WKInterfaceController, WCSessionDelegate {
     var fromMobile: String = ""
 //    private var healthStore = HKHealthStore()
        let heartRateQuantity = HKUnit(from: "count/min")
@@ -18,21 +18,21 @@ class FlutterVdoTokWear: WKInterfaceController, WCSessionDelegate {
 //    @IBOutlet weak var label: WKInterfaceLabel!
 
 
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+    public func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
     }
     //    message come From Mobie
-        func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+    public func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
 //            self.label.setText(message["counter"] as! String)
             
             print("this is from mobile ", message["counter"] as! String)
             if(message["type"] as! String == "hr"){
-                getHeartRate()
+                VdoTokWear.getHeartRate()
             }
             else if(message["type"] as! String == "bo"){
-                getBloodOxygen()
+//                getBloodOxygen()
             }
             else if(message["type"] as! String == "sc"){
-                getStepCounts()
+//                getStepCounts()
             }else{
                 
             }
@@ -58,7 +58,7 @@ class FlutterVdoTokWear: WKInterfaceController, WCSessionDelegate {
         }
     }
  
-    override func awake(withContext context: Any?) {
+    public override func awake(withContext context: Any?) {
         super.awake(withContext: context)
 
         if(WCSession.isSupported()){
@@ -72,13 +72,13 @@ class FlutterVdoTokWear: WKInterfaceController, WCSessionDelegate {
 
   
 
-    override func willActivate() {
+    public override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
 //        start()
     }
 
-    override func didDeactivate() {
+    public override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
     }
@@ -88,17 +88,17 @@ class FlutterVdoTokWear: WKInterfaceController, WCSessionDelegate {
 
 //    for Sensors data
 
-    func start() {
+  public static  func start() {
         getBloodOxygen()
         getHeartRate()
         getStepCounts()
       }
-    override func didAppear() {
-        start()
+    public override func didAppear() {
+//        start()
 //        HeartRateModel.init()
        
     }
-  func  getBloodOxygen(){
+    public static  func  getBloodOxygen(){
         let bloodOxygenModel = BloodOxygenModel()
         bloodOxygenModel.autorizeHealthKit(){ value, error in
             
@@ -106,7 +106,7 @@ class FlutterVdoTokWear: WKInterfaceController, WCSessionDelegate {
             
         }
     }
-    func  getHeartRate(){
+    public static  func  getHeartRate(){
           let heartRateModel = HeartRateModel()
         heartRateModel.autorizeHealthKit(){ value, error in
               
@@ -114,7 +114,7 @@ class FlutterVdoTokWear: WKInterfaceController, WCSessionDelegate {
               
           }
       }
-    func getStepCounts(){
+    public static  func getStepCounts(){
         let stepCountModel = StepsCountModel()
         stepCountModel.autorizeHealthKit(completion: {value, error in
             
