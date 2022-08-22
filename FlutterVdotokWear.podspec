@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |spec|
   spec.name         = "FlutterVdotokWear"
-  spec.version      = "0.0.7"
+  spec.version      = "0.0.8"
   spec.summary      = "FlutterVdotokWear allows to get all type of sensory data."
   spec.description  = <<-DESC
   Hi, This is pod for wear to get all sensors data and send data to Mobile application.

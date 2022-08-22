@@ -1,156 +1,162 @@
 //
-//  FlutterVdotokWear.swift
-//  FlutterVdotokWear
+//  VdotokWear.swift
+//  FlutterWear
 //
-//  Created by Taimoor khan on 17/08/2022.
+//  Created by Taimoor khan on 18/08/2022.
 //
 
 import WatchKit
 import Foundation
 import WatchConnectivity
 import HealthKit
-public class VdoTokWear: WKInterfaceController, WCSessionDelegate {
+public class VdoTokWear: NSObject, WCSessionDelegate {
+    var healthStore = HKHealthStore()
     var fromMobile: String = ""
 //    private var healthStore = HKHealthStore()
        let heartRateQuantity = HKUnit(from: "count/min")
 
      private var value = 0
-//    @IBOutlet weak var label: WKInterfaceLabel!
-
-
-    public func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+    
+    var wcSession : WCSession? = nil
+    public override init() {
+      
+        wcSession = WCSession.default
+       
+        super.init()
+        wcSession?.delegate = self
+        wcSession?.activate()
+ 
     }
-    //    message come From Mobie
+    
+
+    
+    
+    
+    public func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+
+    }
     public func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-//            self.label.setText(message["counter"] as! String)
-            
-            print("this is from mobile ", message["counter"] as! String)
+
+            print("this is from mobile ",  message["type"] as! String)
             if(message["type"] as! String == "hr"){
-                getHeartRate()
-            }
-            else if(message["type"] as! String == "bo"){
-                getBloodOxygen()
-            }
-            else if(message["type"] as! String == "sc"){
-                getStepCounts()
-            }else{
+                let type : HKSampleType = HKSampleType.quantityType(forIdentifier: .heartRate)!
+                
+                let flag : Bool =   hasPermission(type: type, access: 1)!
+                print("thsi is flag ", flag)
+                
+                if(flag){
+                    getHeartRate()
+                }else{
+                    sendString(text: "Permission not granted" , messgaeType: "message")
+                    
+                }
                 
             }
-//            start()
-            fromMobile = (message["counter"] as! String)
-    //        start()
-        }
+            else if(message["type"] as! String == "bo"){
+                
+                
+                let type : HKSampleType = HKSampleType.quantityType(forIdentifier: .oxygenSaturation)!
+                
+                let flag : Bool =   hasPermission(type: type, access: 1)!
+                print("thsi is flag ", flag)
+                
+                if(flag){
+                    getBloodOxygen()
+                }else{
+                    sendString(text: "Permission not granted" , messgaeType: "message")
+                    
+                }
+                  
+            }
+            else if(message["type"] as! String == "sc"){
+                
+                let type : HKSampleType = HKSampleType.quantityType(forIdentifier: .stepCount)!
+                
+                let flag : Bool =   hasPermission(type: type, access: 1)!
+                print("thsi is flag ", flag)
+                
+                if(flag){
+                    getStepCounts()
+                }else{
+                    sendString(text: "Permission not granted" , messgaeType: "message")
+                }
+                
+            }else{
 
-//    @IBAction func SendToApp() {
-//        sendString(text: fromMobile+"from Watch")
-//
-//    }
-    func sendString(text: String){
-        print(text)
-        let session = WCSession.default;
-        if(session.isReachable){
-         DispatchQueue.main.async {
+            }
+
+        }
+    
+    
+    func sendString(text: String, messgaeType: String){
+
+        if(wcSession!.isReachable){
+            DispatchQueue.main.async { [self] in
                 print("Sending counter...")
-                session.sendMessage(["counter": text], replyHandler: nil)
+             wcSession!.sendMessage([messgaeType: text], replyHandler: nil)
             }
         }else{
             print("Watch not reachable...")
         }
     }
- 
-    public override func awake(withContext context: Any?) {
-        super.awake(withContext: context)
+    
+    func  getBloodOxygen(){
+          let bloodOxygenModel = BloodOxygenModel()
+        bloodOxygenModel.autorizeHealthKit(){ [self] value, error in
+              if(value != nil){
+                  sendString(text: String(format: "%f", value!) , messgaeType: "hr")
 
-        if(WCSession.isSupported()){
-         let session = WCSession.default;
-         session.delegate = self;
-         session.activate();
-            print("awake...")
-        }
-
-//        label.setText("Taimoor Watch")
-    }
-
-  
-
-    public override func willActivate() {
-        // This method is called when watch view controller is about to be visible to user
-        super.willActivate()
-        print("willActivate...")
-//        start()
-    }
-
-    public override func didDeactivate() {
-        // This method is called when watch view controller is no longer visible
-        super.didDeactivate()
-        print("didDeactivate...")
-    }
-
-
-
-
-//    for Sensors data
-
-  public   func start() {
-        getBloodOxygen()
-        getHeartRate()
-        getStepCounts()
-      }
-    public override func didAppear() {
-//        start()
-//        HeartRateModel.init()
-       
-    }
-    public   func  getBloodOxygen(){
-        let bloodOxygenModel = BloodOxygenModel()
-        bloodOxygenModel.autorizeHealthKit(){ value, error in
-            
-            print("this is oxygen in blood result result",value as Any)
-            
-        }
-    }
-    public   func  getHeartRate(){
-          let heartRateModel = HeartRateModel()
-        heartRateModel.autorizeHealthKit(){ value, error in
+              }else{
+                  sendString(text: "Something went wrong " , messgaeType: "message")
+              }
               
-            print("this is heartRate result",value as Any)
               
           }
       }
-    public   func getStepCounts(){
-        let stepCountModel = StepsCountModel()
-        stepCountModel.autorizeHealthKit(completion: {value, error in
-            
-            print("this is stepCounts ", value as Any)
-            
-        })
+      func  getHeartRate(){
+            let heartRateModel = HeartRateModel()
+          heartRateModel.autorizeHealthKit(){ [self] value, error in
+              if(value != nil){
+                  sendString(text: String(format: "%f", value!) , messgaeType: "bo")
+              }else{
+                  sendString(text: "Something went wrong  " , messgaeType: "message")
+              }
+             
+                
+            }
+        }
+      func getStepCounts(){
+          let stepCountModel = StepsCountModel()
+          stepCountModel.autorizeHealthKit(completion: { [self]value, error in
+              
+              if(value != nil){
+                  sendString(text: String(value!) , messgaeType: "sc")
+              }else{
+                  sendString(text: "Something went wrong  " , messgaeType: "message")
+              }
+              
+          })
+      }
+    
+    
+    
+    func hasPermission(type: HKSampleType, access: Int) -> Bool? {
+        
+        if #available(iOS 13.0, *) {
+            let status = healthStore.authorizationStatus(for: type)
+            switch access {
+            case 0: // READ
+                return nil
+            case 1: // WRITE
+                return  (status == HKAuthorizationStatus.sharingAuthorized)
+            default: // READ_WRITE
+                return nil
+            }
+        }
+        else {
+            return nil
+        }
     }
-
- 
- 
-
-    
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
     
     
-    
-
-    
-   
-
-   
 }
