@@ -1,9 +1,3 @@
-//
-//  VdotokWear.swift
-//  FlutterWear
-//
-//  Created by Taimoor khan on 18/08/2022.
-//
 
 import WatchKit
 import Foundation
@@ -41,14 +35,13 @@ public class VdoTokWear: NSObject, WCSessionDelegate {
             if(message["type"] as! String == "hr"){
                 let type : HKSampleType = HKSampleType.quantityType(forIdentifier: .heartRate)!
                 
-                let flag : Bool =   hasPermission(type: type, access: 1)!
-                print("thsi is flag ", flag)
+                let status : HKAuthorizationStatus =   hasPermission(type: type, access: 1)!
+//                print("thsi is flag ", flag)
                 
-                if(flag){
+                if(status == HKAuthorizationStatus.notDetermined){
                     getHeartRate()
                 }else{
                     sendString(text: "Permission not granted" , messgaeType: "message")
-                    
                 }
                 
             }
@@ -57,10 +50,10 @@ public class VdoTokWear: NSObject, WCSessionDelegate {
                 
                 let type : HKSampleType = HKSampleType.quantityType(forIdentifier: .oxygenSaturation)!
                 
-                let flag : Bool =   hasPermission(type: type, access: 1)!
-                print("thsi is flag ", flag)
+                let status : HKAuthorizationStatus =   hasPermission(type: type, access: 1)!
+//                print("thsi is flag ", flag)
                 
-                if(flag){
+                if(status == HKAuthorizationStatus.notDetermined){
                     getBloodOxygen()
                 }else{
                     sendString(text: "Permission not granted" , messgaeType: "message")
@@ -72,10 +65,10 @@ public class VdoTokWear: NSObject, WCSessionDelegate {
                 
                 let type : HKSampleType = HKSampleType.quantityType(forIdentifier: .stepCount)!
                 
-                let flag : Bool =   hasPermission(type: type, access: 1)!
-                print("thsi is flag ", flag)
+                let status : HKAuthorizationStatus =   hasPermission(type: type, access: 1)!
+//                print("thsi is flag ", flag)
                 
-                if(flag){
+                if(status == HKAuthorizationStatus.notDetermined){
                     getStepCounts()
                 }else{
                     sendString(text: "Permission not granted" , messgaeType: "message")
@@ -104,7 +97,7 @@ public class VdoTokWear: NSObject, WCSessionDelegate {
           let bloodOxygenModel = BloodOxygenModel()
         bloodOxygenModel.autorizeHealthKit(){ [self] value, error in
               if(value != nil){
-                  sendString(text: String(format: "%f", value!) , messgaeType: "hr")
+                  sendString(text: String(format: "%f", value!) , messgaeType: "bo")
 
               }else{
                   sendString(text: "Something went wrong " , messgaeType: "message")
@@ -117,7 +110,7 @@ public class VdoTokWear: NSObject, WCSessionDelegate {
             let heartRateModel = HeartRateModel()
           heartRateModel.autorizeHealthKit(){ [self] value, error in
               if(value != nil){
-                  sendString(text: String(format: "%f", value!) , messgaeType: "bo")
+                  sendString(text: String(format: "%f", value!) , messgaeType: "hr")
               }else{
                   sendString(text: "Something went wrong  " , messgaeType: "message")
               }
@@ -140,15 +133,17 @@ public class VdoTokWear: NSObject, WCSessionDelegate {
     
     
     
-    func hasPermission(type: HKSampleType, access: Int) -> Bool? {
+    func hasPermission(type: HKSampleType, access: Int) -> HKAuthorizationStatus? {
         
         if #available(iOS 13.0, *) {
             let status = healthStore.authorizationStatus(for: type)
+           
+            
             switch access {
             case 0: // READ
                 return nil
             case 1: // WRITE
-                return  (status == HKAuthorizationStatus.sharingAuthorized)
+                return  status
             default: // READ_WRITE
                 return nil
             }
