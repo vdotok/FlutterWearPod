@@ -38,7 +38,7 @@ public class VdoTokWear: NSObject, WCSessionDelegate {
                 let status : HKAuthorizationStatus =   hasPermission(type: type, access: 1)!
 //                print("thsi is flag ", flag)
                 
-                if(status == HKAuthorizationStatus.notDetermined){
+                if(status == HKAuthorizationStatus.notDetermined || HKAuthorizationStatus.sharingAuthorized){
                     getHeartRate()
                 }else{
                     sendString(text: "Permission not granted" , messgaeType: "message")
@@ -53,7 +53,7 @@ public class VdoTokWear: NSObject, WCSessionDelegate {
                 let status : HKAuthorizationStatus =   hasPermission(type: type, access: 1)!
 //                print("thsi is flag ", flag)
                 
-                if(status == HKAuthorizationStatus.notDetermined){
+                if(status == HKAuthorizationStatus.notDetermined || HKAuthorizationStatus.sharingAuthorized){
                     getBloodOxygen()
                 }else{
                     sendString(text: "Permission not granted" , messgaeType: "message")
@@ -68,7 +68,7 @@ public class VdoTokWear: NSObject, WCSessionDelegate {
                 let status : HKAuthorizationStatus =   hasPermission(type: type, access: 1)!
 //                print("thsi is flag ", flag)
                 
-                if(status == HKAuthorizationStatus.notDetermined){
+                if(status == HKAuthorizationStatus.notDetermined || HKAuthorizationStatus.sharingAuthorized){
                     getStepCounts()
                 }else{
                     sendString(text: "Permission not granted" , messgaeType: "message")
