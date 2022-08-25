@@ -53,7 +53,7 @@ class HeartRateModel : NSObject{
     
     func autorizeHealthKit(completion: @escaping (Double?, Error?) -> Void) {
          lastHeartRate = 0.0
-        let healthKitTypesToWrite: Set<HKSampleType> = [HKObjectType.workoutType()]
+        let healthKitTypesToWrite: Set<HKSampleType> = [HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!]
     let healthKitTypesToRead: Set<HKObjectType> = [
     HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!]
 //        let healthKitTypesToWrite: Set<HKSampleType> = [bodyMassIndex,

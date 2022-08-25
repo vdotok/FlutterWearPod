@@ -10,7 +10,7 @@ class BloodOxygenModel : NSObject{
     }
 
     func autorizeHealthKit(completion: @escaping (Double?, Error?) -> Void) {
-            let healthKitTypesToWrite: Set<HKSampleType> = [HKObjectType.workoutType()]
+            let healthKitTypesToWrite: Set<HKSampleType> = [HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.oxygenSaturation)!]
         let healthKitTypesToRead: Set<HKObjectType> = [
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.oxygenSaturation)!]
 
