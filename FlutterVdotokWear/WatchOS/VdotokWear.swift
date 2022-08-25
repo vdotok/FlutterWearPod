@@ -84,12 +84,11 @@ public class VdoTokWear: NSObject, WCSessionDelegate {
     func sendString(text: String, messgaeType: String){
 
         if(wcSession!.isReachable){
-            DispatchQueue.main.async { [self] in
-                print("Sending counter...")
-             wcSession!.sendMessage([messgaeType: text], replyHandler: nil)
+            DispatchQueue.main.async { [self] in             wcSession!.sendMessage([messgaeType: text], replyHandler: nil)
             }
         }else{
-            print("Watch not reachable...")
+            print("phone not reachable...")
+//            sendString(text: "Phone not reachable...Please turn on your watch display" , messgaeType: "message")
         }
     }
     
