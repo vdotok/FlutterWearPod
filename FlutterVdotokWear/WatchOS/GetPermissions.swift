@@ -22,7 +22,7 @@ class GetPermissions : NSObject{
         // Access Step Count
         let healthKitTypes: Set = [ HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.stepCount)!, HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.oxygenSaturation)!, HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)! ]
         // Check for Authorization
-        healthStore.requestAuthorization(toShare: healthKitTypes, read: healthKitTypes) { [self] (success, error) in
+        healthStore.requestAuthorization(toShare: healthKitTypes, read: healthKitTypes) {  (success, error) in
             if (success) {
                 completion(1, nil)
                 // Authorization Successful
