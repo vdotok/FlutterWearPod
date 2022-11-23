@@ -19,6 +19,16 @@ public class VdoTokWear: NSObject, WCSessionDelegate {
         super.init()
         wcSession?.delegate = self
         wcSession?.activate()
+        let getPermissions = GetPermissions()
+        getPermissions.autorizeHealthKit(){ [self] value, error in
+            if(value != nil){
+                //                sendString(text: String(format: "%f", value!) , messgaeType: "bo")
+                
+            }else{
+                sendString(text: "Something went wrong " , messgaeType: "message")
+            }
+            
+        }
  
     }
     
