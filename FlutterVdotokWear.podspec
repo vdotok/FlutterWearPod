@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |spec|
   spec.name         = "FlutterVdotokWear"
-  spec.version      = "0.0.20"
+  spec.version      = "0.0.21"
   spec.summary      = "FlutterVdotokWear allows to get all type of sensory data."
   spec.description  = <<-DESC
   Hi, This is pod for wear to get all sensors data and send data to Mobile application.
@@ -23,6 +23,6 @@ Pod::Spec.new do |spec|
   spec.source       = { :git => "https://github.com/vdotok/FlutterWearPod.git", :tag => "#{spec.version}" }
   spec.ios.deployment_target = '14.0'
   spec.ios.source_files = "FlutterWearPod/Shared/**/*.swift"
-  spec.watchos.deployment_target = '6.0'
+  spec.watchos.deployment_target = '9.1'
   spec.watchos.source_files = "FlutterVdotokWear/WatchOS/**/*.swift"
 end
