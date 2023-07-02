@@ -39,7 +39,7 @@ public class VdoTokWear: NSObject, WCSessionDelegate {
     public func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
 
     }
-    public func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+    public func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
 
             print("this is from mobile ",  message["type"] as! String)
             if(message["type"] as! String == "hr"){
@@ -94,7 +94,11 @@ public class VdoTokWear: NSObject, WCSessionDelegate {
     func sendString(text: String, messgaeType: String){
 
         if(wcSession!.isReachable){
-            DispatchQueue.main.async { [self] in             wcSession!.sendMessage([messgaeType: text], replyHandler: nil)
+            DispatchQueue.main.async { [self] in             wcSession!.sendMessage([messgaeType: text], replyHandler: { reply in
+                print("reply: \(reply)")
+                   }, errorHandler: { error in
+                       print("error: \(error)")
+                   })
             }
         }else{
             print("phone not reachable...")
